@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Página Inicial{% endblock %} {% block
+content %}
+<div class="container py-5">
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1>Upload a File</h1>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+      <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="Upload" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
