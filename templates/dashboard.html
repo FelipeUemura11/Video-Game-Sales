@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<div class="ctn_base">
+    <div class="ctn_secondary text-center center_div">
+        <div style="width: 80%">
+            <h3>DASHBOARD</h3>
+            {% with messages = get_flashed_messages() %} {% if messages %} {% for
+            message in messages %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar" ></button>
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+            {% if uploaded_file %}
+                <p>Arquivo carregado: {{ uploaded_file }}</p>
+            {% else %}
+                <p>Nenhum arquivo carregado.</p>
+            {% endif %}
+            <div>
+                <a href="{{ url_for('upload') }}"><button class="btn btn-primary" style="border-radius: 20px">UPLOAD</button></a>
+                {% if uploaded_file %}
+                    <a href="{{ url_for('predcit') }}"><button class="btn btn-primary" style="border-radius: 20px">PREDICT</button></a>
+                    <a href="{{ url_for('analytics') }}"><button class="btn btn-primary" style="border-radius: 20px">ANALYTICS</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

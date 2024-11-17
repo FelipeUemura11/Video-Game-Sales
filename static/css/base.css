@@ -175,6 +175,10 @@
   --bs-form-invalid-border-color: #ea868f;
 }
 
+body {
+  background-color: var(--bs-tertiary-bg);
+}
+
 #theme-switch {
     height: 50px;
     width: 50px;
@@ -225,4 +229,32 @@ footer{
 #navbarNav {
   width: 100%;
   justify-content: space-between;
+}
+
+#homeButton {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--bs-tertiary-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+#homeButton:hover {
+    transform: scale(1.1);
+}
+
+#homeButton.clicked:hover {
+    transform: scale(0.9);
+}
+
+#homeButton:active {
+    transform: scale(0.9);
+}
+
+#homeButton svg {
+    fill: var(--bs-body-color);
 }

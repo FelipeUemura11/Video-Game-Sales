@@ -2,8 +2,16 @@
   'use strict'
 
   const themeSwitch = document.querySelector('#theme-switch')
-  const getStoredTheme = () => localStorage.getItem('theme')
-  const setStoredTheme = theme => localStorage.setItem('theme', theme)
+
+  const getStoredTheme = () => {
+    const match = document.cookie.match(new RegExp('(^| )theme=([^;]+)'));
+    if (match) return match[2];
+    return null;
+  }
+
+  const setStoredTheme = (theme) => {
+    document.cookie = "theme=" + theme + "; path=/";
+  }
 
   const getPreferredTheme = () => {
     const storedTheme = getStoredTheme()
@@ -29,7 +37,8 @@
   }
 
   // Inicializa o tema e os ícones
-  setTheme(getPreferredTheme())
+  const preferredTheme = getPreferredTheme();
+  setTheme(preferredTheme)
   updateIcon()
 
   // Evento de clique para alternar o tema
@@ -40,12 +49,11 @@
     setTheme(theme)
     updateIcon()
 
-    // Adicionar classe .clicked para ativar a transição
-    themeSwitch.classList.add('clicked')
+    // Ocultar o conteúdo principal e exibir o carregador
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('loading-spinner').style.display = 'flex';
 
-    // Remover a classe .clicked após a transição
-    setTimeout(() => {
-      themeSwitch.classList.remove('clicked')
-    }, 200) // O tempo aqui deve corresponder à duração da transição no CSS (0.2s)
+    // Recarregar a página para atualizar os gráficos
+    window.location.reload();
   })
 })()

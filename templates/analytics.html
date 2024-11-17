@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+<style>
+    .ctn_secondary {
+        width: 95%;
+    }
+    #plots_box {
+        height: 500px;
+        max-height: 500px;
+        overflow-y: scroll;
+    }
+    #plots_box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        border: black 1px solid;
+        border-radius: 20px 6px 6px 20px;
+    }
+    #plot {
+        flex: 1 1 calc(50% - 20px);
+        box-sizing: border-box;
+    }
+    #plots_box::-webkit-scrollbar {
+        width: 12px; /* Largura da barra de rolagem */
+    }
+    #plots_box::-webkit-scrollbar-track {
+        background: var(--bs-tertiary-bg); /* Cor de fundo da barra */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    #plots_box::-webkit-scrollbar-thumb {
+        background: var(--bs-tertiary-color); /* Cor do scroll */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    #plots_box::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Cor ao passar o mouse */
+    }
+
+    #horizontal_divisor:last-child {
+        height: 0px;
+        display: none;
+    }
+</style>
+<div class="ctn_base">
+    <div class="ctn_secondary text-center center_div">
+        <div style="width: 100%">
+            <h1>ANALYTICS</h1>
+            <div style="width: 100%; display: flex; justify-content: space-between">
+                <a href="{{ url_for('dashboard') }}"><button class="btn btn-primary" style="border-radius: 20px">DASHBOARD</button></a>
+                <a href="{{ url_for('interactive_plot') }}"><button class="btn btn-primary" style="border-radius: 20px">INTERACTIVE GRAPH</button></a>
+            </div>
+            <hr>
+
+            <div id="loading-spinner" style="display: flex; justify-content: center; align-items: center; height: auto;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+
+            <div id="main-content" style="display: none;">
+                <!-- Seu conteúdo existente -->
+                <div id="plots_box">
+                    {% for viz in visualizations %}
+                        <div id="plot">
+                            <h2>{{ viz.titulo }}</h2>
+                            <img src="{{ viz.imagem }}" alt="Gráfico Matplotlib" class="img-fluid" />
+                        </div>
+                        {% if loop.index % 6 == 0 %}
+                            <div style="width: 100%; height: 1px; background-color: black"></div>
+                            <div id="plot">
+                                <h2>Grafico Interativo</h2>
+                                {{ interactive_plot|safe }}
+                            </div>
+                        {% endif %}
+                        {% if loop.index % 2 != 0 and not loop.last %}
+                            <div style="width: 1px; background: black;"></div>
+                        {% endif %}
+                        {% if loop.index % 2 == 0 %}
+                            <div id="horizontal_divisor" style="width: 100%; height: 1px; background-color: black"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fazer a requisição AJAX para obter os gráficos
+        fetch('{{ url_for("get_visualizations") }}')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Tratar erros
+                    console.error(data.error);
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    alert('Ocorreu um erro ao carregar os gráficos.');
+                } else {
+                    const visualizations = data.visualizations;
+                    const plotsBox = document.getElementById('plots_box');
+
+                    visualizations.forEach((viz, index) => {
+                        // Criar o elemento do gráfico
+                        const plotDiv = document.createElement('div');
+                        plotDiv.id = 'plot';
+
+                        const title = document.createElement('h2');
+                        title.textContent = viz.titulo;
+                        plotDiv.appendChild(title);
+
+                        const img = document.createElement('img');
+                        img.src = viz.imagem;
+                        img.alt = 'Gráfico Matplotlib';
+                        img.className = 'img-fluid';
+                        plotDiv.appendChild(img);
+
+                        plotsBox.appendChild(plotDiv);
+
+                        // Adicionar divisores conforme necessário
+                        if ((index + 1) % 6 === 0) {
+                            const divider = document.createElement('div');
+                            divider.style.width = '100%';
+                            divider.style.height = '1px';
+                            divider.style.backgroundColor = 'black';
+                            plotsBox.appendChild(divider);
+                        } else if ((index + 1) % 2 !== 0 && index !== visualizations.length - 1) {
+                            const divider = document.createElement('div');
+                            divider.style.width = '1px';
+                            divider.style.background = 'black';
+                            plotsBox.appendChild(divider);
+                        } else if ((index + 1) % 2 === 0) {
+                            const divider = document.createElement('div');
+                            divider.style.width = '100%';
+                            divider.style.height = '1px';
+                            divider.style.backgroundColor = 'black';
+                            plotsBox.appendChild(divider);
+                        }
+                    });
+
+                    // Ocultar o indicador de carregamento e mostrar o conteúdo
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                document.getElementById('loading-spinner').style.display = 'none';
+                alert('Ocorreu um erro ao carregar os gráficos.');
+            });
+    });
+</script>
+{% endblock %}

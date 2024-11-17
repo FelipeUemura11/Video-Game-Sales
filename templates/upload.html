@@ -1,21 +1,129 @@
-{% extends "base.html" %} {% block title %}Página Inicial{% endblock %} {% block
-content %}
-<div class="container py-5">
-  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
-      <h1>Upload a File</h1>
-      {% with messages = get_flashed_messages() %} {% if messages %}
-      <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% endwith %}
-      <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <input type="submit" value="Upload" />
-      </form>
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --bs-primary-hover-bg: #0056b3; /* Azul mais escuro */
+        --bs-primary-hover-border-color: #0056b3;
+        --bs-primary-hover-color: #fff; /* Branco */
+    }
+
+    [data-bs-theme="dark"] {
+        --bs-primary-hover-bg: #1a73e8; /* Azul claro */
+        --bs-primary-hover-border-color: #1a73e8;
+        --bs-primary-hover-color: #fff; /* Branco */
+    }
+
+    #upload_file_box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 20px;
+        gap: 0;
+    }
+
+    .upload-label {
+        cursor: pointer;
+        text-align: center;
+        margin-bottom: 0;
+        background-color: #0b5ed7;
+        color: white;
+        padding: 8px;
+        border-radius: 20px 0 0 20px;
+        transition: background-color 0.3s ease;
+        border: 1px solid #0b5ed7;
+    }
+
+    .upload-label:hover {
+        background-color: var(--bs-primary-hover-bg);
+    }
+
+    .file-name {
+        flex: 1;
+        padding: 8px;
+        border-top: 1px solid #0b5ed7;
+        border-bottom: 1px solid #0b5ed7;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-style: italic;
+    }
+
+    .btn-upload {
+        padding: 8px;
+        border-radius: 0 20px 20px 0;
+        background-color: #0b5ed7;
+        color: white;
+        border: 1px solid #0b5ed7;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-upload:hover {
+        background-color: var(--bs-primary-hover-bg);
+    }
+
+    form input[type="file"] {
+        display: none;
+    }
+
+    .invalid-feedback {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        color: #dc3545;
+    }
+</style>
+<div class="ctn_base">
+    <div class="ctn_secondary center_div">
+        <div style="width: 80%">
+            <h3>Upload Arquivo</h3>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show bg-danger" style="color: white" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div id="upload_file_box">
+                    <!-- Input de arquivo escondido -->
+                    <input type="file" name="file" id="file" required />
+
+                    <!-- Label que atua como botão -->
+                    <label for="file" class="upload-label">Escolher arquivo</label>
+
+                    <!-- Elemento para exibir o nome do arquivo -->
+                    <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
+
+                    <!-- Botão de upload -->
+                    <button type="submit" class="btn-upload">Upload</button>
+
+                    <div class="invalid-feedback">Por favor, selecione um arquivo.</div>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var inputFile = document.getElementById('file');
+        var fileNameSpan = document.getElementById('file-name');
+
+        inputFile.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                var fileName = this.files[0].name;
+                fileNameSpan.textContent = fileName;
+            } else {
+                fileNameSpan.textContent = 'Nenhum arquivo selecionado';
+            }
+        });
+    });
+</script>
+
 {% endblock %}

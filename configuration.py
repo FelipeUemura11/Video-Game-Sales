@@ -1,14 +1,11 @@
 from flask import Flask
+import os
 
 app = Flask(__name__)
+app.secret_key = 'AEIOU'
 
-# Configura a pasta de arquivos que foram enviados
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv'}
-
+UPLOAD_FOLDER = 'uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Verifica se o arquivo está na lista de tipos de arquivos aceitos
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)

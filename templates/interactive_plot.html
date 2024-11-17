@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<style>
+    .ctn_secondary {
+        width: 95%;
+    }
+    #plots_box {
+        height: 550px;
+        overflow-y: scroll;
+    }
+    #plots_box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        border: black 1px solid;
+        border-radius: 20px 6px 6px 20px;
+    }
+    #plot {
+        flex: 1 1 calc(50% - 20px);
+        box-sizing: border-box;
+    }
+    #plots_box::-webkit-scrollbar {
+        width: 12px; /* Largura da barra de rolagem */
+    }
+    #plots_box::-webkit-scrollbar-track {
+        background: var(--bs-tertiary-bg); /* Cor de fundo da barra */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    #plots_box::-webkit-scrollbar-thumb {
+        background: var(--bs-tertiary-color); /* Cor do scroll */
+        border-radius: 10px; /* Borda arredondada */
+    }
+
+    #plots_box::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Cor ao passar o mouse */
+    }
+</style>
+<div class="ctn_base">
+
+    <div class="ctn_secondary text-center center_div">
+
+        <div style="width: 100%">
+
+            <h1>INTERACTIVE GRAPH</h1>
+            <div style="width: 100%; display: flex; justify-content: space-between">
+                <a href="{{ url_for('dashboard') }}"><button class="btn btn-primary" style="border-radius: 20px">DASHBOARD</button></a>
+                <a href="{{ url_for('analytics') }}"><button class="btn btn-primary" style="border-radius: 20px">ANALYTICS</button></a>
+            </div>
+            <hr>
+
+            <div id="loading-spinner" style="display: flex; justify-content: center; align-items: center; height: auto;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+            </div>
+
+            <div id="main-content" style="display: none;">
+                <!-- Seu conteúdo existente -->
+                <div id="plots_box">
+                    <div id="plot" style="display: flex; justify-content: center">
+                        {{ interactive_plot|safe }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    // JavaScript para detectar quando todas as imagens foram carregadas
+    document.addEventListener("DOMContentLoaded", function() {
+        var images = document.querySelectorAll('#main-content img');
+        var totalImages = images.length;
+        var imagesLoaded = 0;
+
+        if (totalImages === 0) {
+            // Não há imagens para carregar
+            document.getElementById('loading-spinner').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        } else {
+            images.forEach(function(img) {
+                if (img.complete) {
+                    imagesLoaded++;
+                    if (imagesLoaded === totalImages) {
+                        document.getElementById('loading-spinner').style.display = 'none';
+                        document.getElementById('main-content').style.display = 'block';
+                    }
+                } else {
+                    img.addEventListener('load', function() {
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            document.getElementById('loading-spinner').style.display = 'none';
+                            document.getElementById('main-content').style.display = 'block';
+                        }
+                    });
+                    img.addEventListener('error', function() {
+                        // Em caso de erro no carregamento da imagem
+                        imagesLoaded++;
+                        if (imagesLoaded === totalImages) {
+                            document.getElementById('loading-spinner').style.display = 'none';
+                            document.getElementById('main-content').style.display = 'block';
+                        }
+                    });
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

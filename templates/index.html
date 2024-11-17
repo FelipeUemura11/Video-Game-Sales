@@ -3,15 +3,13 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <div class="container py-5">
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Bem-vindo ao Meu Projeto Flask!</h1>
-                <p class="col-md-8 fs-4">Este é o conteúdo da página inicial, estilizado com Bootstrap.</p>
-                <hr class="my-4">
-                <p>Aprenda mais sobre como integrar frameworks CSS ao Flask.</p>
-                <a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">Saiba Mais</a>
-            </div>
+<div class="ctn_base">
+    <div class="ctn_secondary center_div">
+        <div>
+            <h1 class="display-5 fw-bold">Video Game Sales - Analytics</h1>
+            <p class="fs-4">Este é o conteúdo da página inicial, estilizado com Bootstrap.</p>
+            <a href="{{ url_for('dashboard') }}"><button class="btn btn-primary" style="border-radius: 20px">DASHBOARD</button></a>
         </div>
     </div>
+</div>
 {% endblock %}
