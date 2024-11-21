@@ -65,9 +65,9 @@ def predcit():
     set_theme()
     df = ler_dados(app.config['UPLOAD_FOLDER'])
 
-    platforms = sorted(df['Platform'].unique())
-    genres = sorted(df['Genre'].unique())
-    publishers = sorted(df['Publisher'].unique())
+    publishers = df['Publisher'].unique()
+    platforms = df['Platform'].unique()
+    genres = df['Genre'].unique()
 
     result = None
     input_data = None
@@ -83,24 +83,29 @@ def predcit():
 
         result = predict_game(input_data)
         print(input_data)
-        # print(result)
 
-    return render_template('predictions.html', home_button=True, platforms=platforms, genres=genres, publishers=publishers, game=input_data, result=result)
+    return render_template(
+        'predictions.html',
+        home_button=True,
+        platforms=platforms,
+        genres=genres,
+        publishers=publishers,
+        game=input_data,
+        result=result
+    )
 
 @app.route('/analytics', methods=['GET'])
 def analytics():
-    theme = request.cookies.get('theme', 'light')
-    # Não gerar os gráficos aqui
     return render_template('analytics.html', home_button=True)
 
 @app.route('/get-visualizations', methods=['GET'])
 def get_visualizations():
     theme = request.cookies.get('theme', 'light')
+
     df = ler_dados(app.config['UPLOAD_FOLDER'])
+
     try:
         visualizations = generate_visualizations(df, theme)
-        # Se quiser incluir o gráfico interativo:
-        # interactive_plot = gerar_plot_interativo(df, theme)
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
 
@@ -115,9 +120,10 @@ def interactive_plot():
     theme = request.cookies.get('theme', 'light')
 
     df = ler_dados(app.config['UPLOAD_FOLDER'])
-    interactive_plot = gerar_plot_interativo(df, theme)
 
-    return render_template('interactive_plot.html', home_button=True, interactive_plot=interactive_plot)
+    grafico_interativo = gerar_plot_interativo(df, theme)
+
+    return render_template('interactive_plot.html', home_button=True, interactive_plot=grafico_interativo)
 
 if __name__ == '__main__':
     app.run(debug=True)

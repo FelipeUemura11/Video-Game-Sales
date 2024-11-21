@@ -1,76 +1,92 @@
-import os
-import joblib
 import pandas as pd
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from xgboost import XGBRegressor
+from sklearn.multioutput import MultiOutputRegressor
+import numpy as np
+import matplotlib.pyplot as plt
+import joblib
 
-# Carregamento e pré-processamento dos dados
-df = pd.read_csv('datasets/vgsales.csv')
-df = df.dropna()
+df = pd.read_csv('datasets/vgsales_clean.csv')
 
-X = df[['Name', 'Platform', 'Year', 'Genre', 'Publisher']].copy()
-y = df['Global_Sales']  # Alteração para prever apenas Global_Sales
+# Transformar as variáveis categóricas em variáveis numéricas e mapeando os valores originais
+df['Publisher'] = df['Publisher'].astype('category')
+publisher_categories = df['Publisher'].cat.categories
+publisher_mapping = {publisher: code for code, publisher in enumerate(publisher_categories)}
+publisher_inv_mapping = {code: publisher for publisher, code in publisher_mapping.items()}
 
-label_encoders = {}
-for column in ['Platform', 'Genre', 'Publisher']:
-    le = LabelEncoder()
-    X[column] = le.fit_transform(X[column])
-    label_encoders[column] = le
+df['Platform'] = df['Platform'].astype('category')
+platform_categories = df['Platform'].cat.categories
+platform_mapping = {platform: code for code, platform in enumerate(platform_categories)}
+platform_inv_mapping = {code: platform for platform, code in platform_mapping.items()}
 
-scaler = StandardScaler()
-X['Year'] = scaler.fit_transform(X[['Year']])
+df['Genre'] = df['Genre'].astype('category')
+genre_categories = df['Genre'].cat.categories
+genre_mapping = {genre: code for code, genre in enumerate(genre_categories)}
+genre_inv_mapping = {code: genre for genre, code in genre_mapping.items()}
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X.drop(columns=['Name']), y, test_size=0.2, random_state=42)
+# Substituir os valores de 'Publisher' pelos códigos numéricos
+df['Publisher'] = df['Publisher'].cat.codes
 
-# Definição do modelo base
-model = GradientBoostingRegressor(random_state=42)
+# Criar a interação Platform_Genre
+df['Platform_Genre'] = df['Platform'].cat.codes * df['Genre'].cat.codes
 
-# Definição do grid de parâmetros para o GridSearchCV
-param_grid = {
-    'n_estimators': [100, 200, 500],
-    'learning_rate': [0.001, 0.01, 0.1],
-    'max_depth': [3, 5, 7],
-    'subsample': [0.5, 0.7, 1.0],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4],
-}
+# Selecionar as features e os alvos
+X = df[['Publisher', 'Platform_Genre', 'Year']].copy()
+y = df[['Global_Sales', 'NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales']]
 
-# Configuração do GridSearchCV
-grid_search = GridSearchCV(
-    estimator=model,
-    param_grid=param_grid,
-    cv=5,
-    scoring='neg_mean_squared_error',
-    verbose=2,
-    n_jobs=-1
-)
+# Dividir os dados em treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Execução do GridSearchCV para encontrar os melhores parâmetros
-grid_search.fit(X_train, y_train)
+# Treinar o modelo
+xgb = XGBRegressor(random_state=42, max_depth=5, n_estimators=100, objective='reg:squarederror')
+multi_output_xgb = MultiOutputRegressor(xgb)
+multi_output_xgb.fit(X_train, y_train)
 
-# Extração do melhor modelo encontrado
-best_model = grid_search.best_estimator_
+# Avaliar o modelo
+y_pred = multi_output_xgb.predict(X_test)
 
-# Avaliação do modelo no conjunto de teste
-y_pred = best_model.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-mae = mean_absolute_error(y_test, y_pred)
+sales_columns = ['Global_Sales', 'NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales']
 
-print(f"Melhores Parâmetros: {grid_search.best_params_}")
-print(f"MSE no Teste: {mse}")
-print(f"MAE no Teste: {mae}")
+for i, col in enumerate(sales_columns):
+    mse = mean_squared_error(y_test[col], y_pred[:, i])
+    rmse = np.sqrt(mse)
+    mae = mean_absolute_error(y_test[col], y_pred[:, i])
+    r2 = r2_score(y_test[col], y_pred[:, i])
+    print(f"\nMétricas para {col}:")
+    print(f"MSE: {mse:.4f}, RMSE: {rmse:.4f}, MAE: {mae:.4f}, R²: {r2:.4f}")
 
-# Salvamento do melhor modelo encontrado
+# Importância das features
+feature_importances = np.zeros(len(X.columns))
+for estimator in multi_output_xgb.estimators_:
+    feature_importances += estimator.feature_importances_
+
+# Média das importâncias
+feature_importances /= len(multi_output_xgb.estimators_)
+
+features = X.columns
+indices = np.argsort(feature_importances)[::-1]
+
+plt.figure(figsize=(8,6))
+plt.title("Importância das Features - Média das Importâncias dos Modelos")
+plt.bar(range(X.shape[1]), feature_importances[indices], align='center')
+plt.xticks(range(X.shape[1]), [features[i] for i in indices])
+plt.xlabel("Features")
+plt.ylabel("Importância")
+plt.show()
+# As melhores features em ordem crescente são: Platform_Genre, Year, Publisher
+
+import os
+
 if not os.path.exists('models/'):
     os.makedirs('models/')
 
+# Salvar o modelo treinado e os mapeamentos
 joblib.dump({
-    'model': best_model,
-    'label_encoders': label_encoders,
-    'scaler': scaler
-}, 'models/best_model.pkl')
+    'model': multi_output_xgb,
+    'publisher_mapping': publisher_mapping,
+    'platform_mapping': platform_mapping,
+    'genre_mapping': genre_mapping
+}, 'models/best_model2.pkl')
 
-print("Melhor modelo salvo com sucesso em 'models/best_model.pkl'")
+print("\nModelo e mapeamentos salvos com sucesso!")
