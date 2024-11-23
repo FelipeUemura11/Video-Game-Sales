@@ -74,14 +74,12 @@
 
 </div>
 <script>
-    // JavaScript para detectar quando todas as imagens foram carregadas
     document.addEventListener("DOMContentLoaded", function() {
         var images = document.querySelectorAll('#main-content img');
         var totalImages = images.length;
         var imagesLoaded = 0;
 
         if (totalImages === 0) {
-            // Não há imagens para carregar
             document.getElementById('loading-spinner').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
         } else {
@@ -101,7 +99,6 @@
                         }
                     });
                     img.addEventListener('error', function() {
-                        // Em caso de erro no carregamento da imagem
                         imagesLoaded++;
                         if (imagesLoaded === totalImages) {
                             document.getElementById('loading-spinner').style.display = 'none';

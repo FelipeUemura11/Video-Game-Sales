@@ -8,9 +8,11 @@
         width: 95%;
     }
     #plots_box {
-        height: 500px;
-        max-height: 500px;
-        overflow-y: scroll;
+        width: 100%;
+        height: 450px;
+        max-height: 450px;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     #plots_box {
         display: flex;
@@ -25,20 +27,20 @@
         box-sizing: border-box;
     }
     #plots_box::-webkit-scrollbar {
-        width: 12px; /* Largura da barra de rolagem */
+        width: 12px;
     }
     #plots_box::-webkit-scrollbar-track {
-        background: var(--bs-tertiary-bg); /* Cor de fundo da barra */
-        border-radius: 10px; /* Borda arredondada */
+        background: transparent;
+        border-radius: 10px;
     }
 
     #plots_box::-webkit-scrollbar-thumb {
-        background: var(--bs-tertiary-color); /* Cor do scroll */
-        border-radius: 10px; /* Borda arredondada */
+        background: #8971a6;
+        border-radius: 10px;
     }
 
     #plots_box::-webkit-scrollbar-thumb:hover {
-        background: #555; /* Cor ao passar o mouse */
+        background: #5d4c70;
     }
 
     #horizontal_divisor:last-child {
@@ -49,10 +51,27 @@
 <div class="ctn_base">
     <div class="ctn_secondary text-center center_div">
         <div style="width: 100%">
-            <h1>ANALYTICS</h1>
+            <h1 style="font-size: 22px;">ANALYTICS</h1>
             <div style="width: 100%; display: flex; justify-content: space-between">
-                <a href="{{ url_for('dashboard') }}"><button class="btn btn-primary" style="border-radius: 20px">DASHBOARD</button></a>
-                <a href="{{ url_for('interactive_plot') }}"><button class="btn btn-primary" style="border-radius: 20px">INTERACTIVE GRAPH</button></a>
+                <a href="{{ url_for('dashboard') }}">
+                    <button class="btn btn-primary"
+                        style="color: white; border-radius: 2rem; border: none; background-color: #8971a6;
+                        padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
+                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
+                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
+                        DASHBOARD
+                    </button>
+                </a>
+
+                <a href="{{ url_for('interactive_plot') }}">
+                    <button class="btn btn-primary"
+                        style="color: white; border-radius: 2rem; border: none; background-color: #8971a6;
+                        padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
+                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
+                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
+                    INTERACTIVE GRAPH
+                    </button>
+                </a>
             </div>
             <hr>
 
@@ -91,12 +110,10 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Fazer a requisição AJAX para obter os gráficos
         fetch('{{ url_for("get_visualizations") }}')
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    // Tratar erros
                     console.error(data.error);
                     document.getElementById('loading-spinner').style.display = 'none';
                     alert('Ocorreu um erro ao carregar os gráficos.');
@@ -105,7 +122,6 @@
                     const plotsBox = document.getElementById('plots_box');
 
                     visualizations.forEach((viz, index) => {
-                        // Criar o elemento do gráfico
                         const plotDiv = document.createElement('div');
                         plotDiv.id = 'plot';
 
@@ -121,7 +137,6 @@
 
                         plotsBox.appendChild(plotDiv);
 
-                        // Adicionar divisores conforme necessário
                         if ((index + 1) % 6 === 0) {
                             const divider = document.createElement('div');
                             divider.style.width = '100%';
@@ -142,7 +157,6 @@
                         }
                     });
 
-                    // Ocultar o indicador de carregamento e mostrar o conteúdo
                     document.getElementById('loading-spinner').style.display = 'none';
                     document.getElementById('main-content').style.display = 'block';
                 }

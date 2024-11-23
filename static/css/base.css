@@ -179,6 +179,19 @@ body {
   background-color: var(--bs-tertiary-bg);
 }
 
+.silkscreen-regular {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.silkscreen-bold {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
 #theme-switch {
     height: 50px;
     width: 50px;
@@ -222,8 +235,8 @@ body {
 }
 
 footer{
-    background-color: var(--bs-primary-bg-subtle);
-    color: var(--bs-primary-text-emphasis);
+    background-color: #c194f7;
+    color: #c194f7;
 }
 
 #navbarNav {
@@ -236,7 +249,7 @@ footer{
     width: 50px;
     padding: 0;
     border-radius: 50%;
-    background-color: var(--bs-tertiary-bg);
+    background-color: #c194f7;
     display: flex;
     justify-content: center;
     align-items: center;

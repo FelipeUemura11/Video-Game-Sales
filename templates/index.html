@@ -2,14 +2,35 @@
 
 {% block title %}Página Inicial{% endblock %}
 
+{% block styles %}
+    {{ super() }}
+    <style>
+        .custom-h1 {
+            font-family: "Silkscreen", monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--bs-primary-text-emphasis);
+        }
+        .dashboard-button {
+            border-radius: 20px;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="ctn_base">
     <div class="ctn_secondary center_div">
         <div>
-            <h1 class="display-5 fw-bold">Video Game Sales - Analytics</h1>
-            <p class="fs-4">Este é o conteúdo da página inicial, estilizado com Bootstrap.</p>
+            <h1 class="display-5 fw-bold custom-h1">Video Game Sales - Analytics</h1>
+            <p class="fs-4 text-center" style="font-size: 21.5px !important;">Este é o conteúdo da página inicial, estilizado com Bootstrap.</p>
             <div class="center_div">
-                <a href="{{ url_for('dashboard') }}"><button class="btn btn-primary" style="border-radius: 20px">DASHBOARD</button></a>
+                <a href="{{ url_for('dashboard') }}" class="btn dashboard-button"
+                   style="color: white; border-radius: 2rem; border: none; background-color: #8971a6;
+                          padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
+                   onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
+                   onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
+                    DASHBOARD
+                </a>
 
             </div>
         </div>
