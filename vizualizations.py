@@ -27,6 +27,8 @@ def generate_visualizations(df, theme):
         'imagem': gerar_imagem(sales_per_publisher_EU, df, theme)
     }, {
         'imagem': gerar_imagem(sales_per_publisher_JP, df, theme)
+    }, {
+        'imagem': gerar_imagem(genero_predominante_regiao, df, theme)
     }]
 
     return visualizations
@@ -129,6 +131,34 @@ def regional_sales(df, ax, theme):
     ax.tick_params(axis='x', colors=text_color)
     ax.tick_params(axis='y', colors=text_color, rotation=45)
 
+    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+
+def genero_predominante_regiao(df, ax, theme):
+
+    valores_por_regiao = df.groupby('Genre')[['NA_Sales', 'EU_Sales', 'JP_Sales']].sum()
+    valores_por_regiao = valores_por_regiao.reset_index()
+    
+    # Normaliza as vendas para comparação proporcional
+    valores_por_regiao_normalizado = valores_por_regiao.set_index('Genre').apply(lambda x: x / x.sum(), axis=0)
+    
+    text_color = "#FFFFFF" if theme == 'dark' else "#000000"
+    colors = sns.color_palette("Set2", len(valores_por_regiao_normalizado))
+
+    valores_por_regiao_normalizado.plot(
+        kind='bar',
+        stacked=False,
+        figsize=(10, 6),
+        color=colors,
+        ax=ax
+    )
+    
+    ax.set_title('Gêneros Mais Predominantes por Região', fontweight='bold', color=text_color)
+    ax.set_xlabel('Gênero', color=text_color)
+    ax.set_ylabel('Proporção de Vendas', color=text_color)
+    ax.tick_params(axis='x', rotation=45, colors=text_color)
+    ax.tick_params(axis='y', colors=text_color)
+    ax.legend(title='Região', loc='upper left', fontsize=10, title_fontsize=12, facecolor='white')
+    
     ax.grid(True, linestyle='--', alpha=0.7, color='gray')
 
 def sales_per_genre_NA(df, ax, theme):
