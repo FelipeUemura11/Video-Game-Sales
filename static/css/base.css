@@ -197,7 +197,7 @@ body {
     width: 50px;
     padding: 0;
     border-radius: 50%;
-    background-color: var(--bs-tertiary-bg);
+    background-color: #9a82b8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,8 +235,8 @@ body {
 }
 
 footer{
-    background-color: #c194f7;
-    color: #c194f7;
+    background-color: #9a82b8;
+    color: #9a82b8;
 }
 
 #navbarNav {
@@ -249,7 +249,7 @@ footer{
     width: 50px;
     padding: 0;
     border-radius: 50%;
-    background-color: #c194f7;
+    background-color: #9a82b8;
     display: flex;
     justify-content: center;
     align-items: center;
