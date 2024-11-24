@@ -4,6 +4,7 @@ import seaborn as sns
 import plotly.graph_objects as go
 from io import BytesIO
 
+
 def generate_visualizations(df, theme):
     sns.set_theme(style='darkgrid' if theme == 'dark' else 'whitegrid')
 
@@ -33,10 +34,11 @@ def generate_visualizations(df, theme):
 
     return visualizations
 
+
 def gerar_imagem(plot_function, df, theme):
     buffer = BytesIO()
 
-    background_color = "#2B3035" if theme == 'dark' else "#FFFFFF"
+    background_color = (43 / 255, 48 / 255, 53 / 255, 0.0) if theme == 'dark' else (1, 1, 1, 0.0)
 
     fig, ax = plt.subplots(figsize=(12, 6), facecolor=background_color)
     ax.set_facecolor(background_color)
@@ -51,6 +53,7 @@ def gerar_imagem(plot_function, df, theme):
     buffer.close()
 
     return f"data:image/png;base64,{img_base64}"
+
 
 def gerar_plot_interativo(df, theme):
     sales_over_time = df.groupby('Year')['Global_Sales'].sum().reset_index()
@@ -93,13 +96,14 @@ def gerar_plot_interativo(df, theme):
             zeroline=True,
             zerolinecolor=zero_line_color
         ),
-        plot_bgcolor=background_color,
-        paper_bgcolor=background_color,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         width=1600,
         height=530
     )
 
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
 
 def sales_per_plataform(df, ax, theme):
     sales_per_platform = df.groupby('Platform')['Global_Sales'].sum() / 1000
@@ -116,7 +120,8 @@ def sales_per_plataform(df, ax, theme):
     ax.tick_params(axis='x', colors=text_color, rotation=90)
     ax.tick_params(axis='y', colors=text_color)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
+
 
 def regional_sales(df, ax, theme):
     regional_sales = df[['NA_Sales', 'EU_Sales', 'JP_Sales']].sum() / 1000
@@ -131,16 +136,16 @@ def regional_sales(df, ax, theme):
     ax.tick_params(axis='x', colors=text_color)
     ax.tick_params(axis='y', colors=text_color, rotation=45)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
+
 
 def genero_predominante_regiao(df, ax, theme):
-
     valores_por_regiao = df.groupby('Genre')[['NA_Sales', 'EU_Sales', 'JP_Sales']].sum()
     valores_por_regiao = valores_por_regiao.reset_index()
-    
+
     # Normaliza as vendas para comparação proporcional
     valores_por_regiao_normalizado = valores_por_regiao.set_index('Genre').apply(lambda x: x / x.sum(), axis=0)
-    
+
     text_color = "#FFFFFF" if theme == 'dark' else "#000000"
     colors = sns.color_palette("Set2", len(valores_por_regiao_normalizado))
 
@@ -151,15 +156,16 @@ def genero_predominante_regiao(df, ax, theme):
         color=colors,
         ax=ax
     )
-    
+
     ax.set_title('Gêneros Mais Predominantes por Região', fontweight='bold', color=text_color)
     ax.set_xlabel('Gênero', color=text_color)
     ax.set_ylabel('Proporção de Vendas', color=text_color)
     ax.tick_params(axis='x', rotation=45, colors=text_color)
     ax.tick_params(axis='y', colors=text_color)
     ax.legend(title='Região', loc='upper left', fontsize=10, title_fontsize=12, facecolor='white')
-    
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
+
 
 def sales_per_genre_NA(df, ax, theme):
     sales_by_genre = df.groupby('Genre')['NA_Sales'].sum().reset_index()
@@ -182,7 +188,7 @@ def sales_per_genre_NA(df, ax, theme):
         label.set_rotation_mode('anchor')  # Define o modo de rotação
         label.set_color(text_color)  # Define a cor do texto
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
 
     if ax.get_legend():
         ax.get_legend().remove()
@@ -206,12 +212,13 @@ def sales_per_genre_EU(df, ax, theme):
     ax.tick_params(axis='x', rotation=45, labelcolor=text_color)
     ax.tick_params(axis='y', labelcolor=text_color)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
 
     if ax.get_legend():
         ax.get_legend().remove()
 
     plt.tight_layout()
+
 
 def sales_per_genre_JP(df, ax, theme):
     sales_by_genre = df.groupby('Genre')['JP_Sales'].sum().reset_index()
@@ -229,12 +236,13 @@ def sales_per_genre_JP(df, ax, theme):
     ax.tick_params(axis='x', rotation=45, labelcolor=text_color)
     ax.tick_params(axis='y', labelcolor=text_color)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
 
     if ax.get_legend():
         ax.get_legend().remove()
 
     plt.tight_layout()
+
 
 def hist_sales_per_platform(df, ax, theme):
     df_grouped = df.groupby('Platform')['Global_Sales'].sum().reset_index()
@@ -250,7 +258,8 @@ def hist_sales_per_platform(df, ax, theme):
     ax.tick_params(axis='x', colors=text_color, rotation=90)
     ax.tick_params(axis='y', colors=text_color)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
+
 
 def hist_sales_per_year(df, ax, theme):
     df_grouped = df.groupby('Year')['Global_Sales'].sum().reset_index()
@@ -265,7 +274,8 @@ def hist_sales_per_year(df, ax, theme):
     ax.tick_params(axis='x', colors=text_color)
     ax.tick_params(axis='y', colors=text_color)
 
-    ax.grid(True, linestyle='--', alpha=0.7, color='gray')
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
+
 
 def sales_per_publisher_NA(df, ax, theme):
     sales_by_publisher = df.groupby('Publisher')['NA_Sales'].sum().reset_index()
@@ -288,6 +298,7 @@ def sales_per_publisher_NA(df, ax, theme):
 
     plt.tight_layout()
 
+
 def sales_per_publisher_EU(df, ax, theme):
     sales_by_publisher = df.groupby('Publisher')['EU_Sales'].sum().reset_index()
     sales_by_publisher = sales_by_publisher.sort_values(by='EU_Sales', ascending=True).tail(20)
@@ -309,6 +320,7 @@ def sales_per_publisher_EU(df, ax, theme):
 
     plt.tight_layout()
 
+
 def sales_per_publisher_JP(df, ax, theme):
     sales_by_publisher = df.groupby('Publisher')['JP_Sales'].sum().reset_index()
     sales_by_publisher = sales_by_publisher.sort_values(by='JP_Sales', ascending=True).tail(20)
@@ -324,6 +336,8 @@ def sales_per_publisher_JP(df, ax, theme):
 
     ax.tick_params(axis='y', labelcolor=text_color)
     ax.tick_params(axis='x', labelcolor=text_color)
+
+    ax.grid(True, linestyle='--', alpha=0.7, color='#FFFFFF')
 
     if ax.get_legend():
         ax.get_legend().remove()
