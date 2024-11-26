@@ -9,82 +9,100 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 
     {% block styles %}
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
 
-        body {
-            background-image: url("{{ url_for('static', filename='img/sky-noite.png') }}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: 'Silkscreen', monospace;
-        }
+            body {
+                background-image: url("{{ url_for('static', filename='img/sky-noite.png') }}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                font-family: 'Silkscreen', monospace;
+            }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2px;
-            color: var(--bs-body-color);
-            border: none;
-        }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 7px;
+            }
 
-        .center_div {
-            display: flex;
-            justify-content: center;
-        }
+            {#MUDA O TITULO DO CABEÇALHO AQUI#}
+            header h1 {
+                font-family: 'Silkscreen', monospace;
+                font-size: 2.3rem;
+                font-weight: 100;
+                color: #c194f7;
+                text-align: center;
+            }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+            .center_div {
+                display: flex;
+                justify-content: center;
+            }
 
-        .ctn_base {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 66px);
-        }
+            .ctn_base {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: calc(100vh - 66px);
+            }
 
-        .ctn_secondary {
-            width: 50%;
-            box-shadow: 0 0 3px 5.5px rgba(0,0,0,0.5);
-            border-radius: 30px;
-            padding: 20px;
-            background-color: transparent;
-        }
+            .ctn_secondary {
+                width: 50%;
+                box-shadow: 0 0 3px 5px rgba(0,0,0,0.5);
+                border-radius: 30px;
+                padding: 20px;
+                background-color: var(--cor-de-fundo-transpartente);
+                color: var(--cor-texto);
+            }
 
-        .custom-h1 {
-            font-family: 'Silkscreen', monospace;
-            font-size: 1.6rem !important;
-            font-weight: 100 !important;
-            color: #c194f7 !important;
-            text-align: center !important;
-        }
+            {#MUDA O TITULO DO CARD DO MEIO AQUI#}
+            .ctn_secondary h1 {
+                font-family: "Silkscreen", monospace;
+                font-size: 22px;
+                text-align: center;
+                font-weight: 700;
+                color: #c194f7;
+            }
 
-        a.btn {
-            text-decoration: none;
-        }
+            {#MUDA O TEXTO DO CARD DO MEIO AQUI#}
+            .ctn_secondary p {
+                font-family: "Silkscreen", monospace;
+                font-size: 21px;
+                text-align: center;
+            }
 
-    </style>
+            .button {
+                padding: 10px 20px;
+                border-radius: 2rem;
+                text-decoration: none;
+                border: none;
+
+                color: white;
+                background-color: var(--cor-fundo-button);
+
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .button:hover {
+                background-color: var(--cor-fundo-button-hover);
+            }
+        </style>
     {% endblock %}
 </head>
 <body>
-    <header style="background: transparent;">
+    <header>
         {% if home_button %}
-            <a class="navbar-brand" id="homeButton" href="{{ url_for('index') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
-                    <path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/>
-                </svg>
+            <a id="homeButton" href="{{ url_for('index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"> <path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/> </svg>
             </a>
         {% else %}
             <div style="width: calc(3% - 7px)"></div>
         {% endif %}
-        <h1 class="custom-h1">video games ⁺₊</h1>
+        <h1>video games ⁺₊</h1>
         <div>
-            <button id="theme-switch" class="btn btn-secondary">
+            <button id="theme-switch" class="button">
                 <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="currentColor">
                     <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/>
                 </svg>
@@ -129,7 +147,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const backButton = document.getElementById('homeButton');
-            const navbar = document.getElementById('navbarNav');
             const themeSwitch = document.getElementById('theme-switch');
 
             if (backButton) {
@@ -141,14 +158,10 @@
                 });
             }
 
-            if (navbar && themeSwitch) {
+            if (themeSwitch) {
                 if (!backButton) {
-                    navbar.style.display = 'flex';
-                    navbar.style.justifyContent = 'space-between';
                     themeSwitch.style.marginLeft = 'auto';
                 } else {
-                    navbar.style.display = 'flex';
-                    navbar.style.justifyContent = 'space-between';
                     themeSwitch.style.marginLeft = '0';
                 }
             }

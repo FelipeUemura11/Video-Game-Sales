@@ -2,83 +2,98 @@
 
 {% block title %}Página Inicial{% endblock %}
 
+{% block styles %}
+    {{ super() }}
+    <style>
+        #upload_file_box {
+            display: flex;
+
+            width: 100%;
+            border-radius: 20px;
+            gap: 0;
+
+            align-items: center;
+        }
+
+        .upload-label {
+            margin-bottom: 0;
+            padding: 8px;
+            border-radius: 20px 0 0 20px;
+
+            text-align: center;
+            border: 1px solid #8971a6;
+            cursor: pointer;
+
+            background-color: #8971a6;
+            color: white;
+
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .upload-label {
+            background-color: var(--cor-fundo-button);
+        }
+
+        .upload-label:hover {
+            background-color: var(--cor-fundo-button-hover);
+        }
+
+        .file-name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+
+            padding: 8px;
+
+            border-top: 1px solid #8971a6;
+            border-bottom: 1px solid #8971a6;
+
+            text-overflow: ellipsis;
+            font-style: italic;
+        }
+
+        .btn-upload {
+            padding: 8px;
+            border-radius: 0 20px 20px 0;
+            
+            border: 1px solid #8971a6;
+
+            background-color: #8971a6;
+            color: white;
+
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-upload {
+            background-color: var(--cor-fundo-button);
+        }
+
+        .btn-upload:hover {
+            background-color: var(--cor-fundo-button-hover);
+        }
+
+        form input[type="file"] {
+            display: none;
+        }
+
+        .invalid-feedback {
+            margin-top: 10px;
+
+            width: 100%;
+
+            text-align: center;
+            
+            color: #dc3545;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-<style>
-    :root {
-        --bs-primary-hover-bg: #5d4c70;
-        --bs-primary-hover-border-color: #5d4c70;
-        --bs-primary-hover-color: #5d4c70;
-    }
 
-    [data-bs-theme="dark"] {
-        --bs-primary-hover-bg: #5d4c70;
-        --bs-primary-hover-border-color: #5d4c70;
-        --bs-primary-hover-color: #5d4c70;
-    }
-
-    #upload_file_box {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        border-radius: 20px;
-        gap: 0;
-    }
-
-    .upload-label {
-        cursor: pointer;
-        text-align: center;
-        margin-bottom: 0;
-        background-color: #8971a6; <-- meche a cor principal não a de fundo
-        color: white;
-        padding: 8px;
-        border-radius: 20px 0 0 20px;
-        transition: background-color 0.3s ease-in-out;
-        border: 1px solid #8971a6;
-    }
-
-    .upload-label:hover {
-        background-color: #5d4c70;
-    }
-
-    .file-name {
-        flex: 1;
-        padding: 8px;
-        border-top: 1px solid #8971a6;
-        border-bottom: 1px solid #8971a6;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-style: italic;
-    }
-
-    .btn-upload {
-        padding: 8px;
-        border-radius: 0 20px 20px 0;
-        background-color: #8971a6;    JA FOI
-        color: white;
-        border: 1px solid #8971a6;
-        transition: background-color #8971a6;
-    }
-
-    .btn-upload:hover {
-        background-color: #5d4c70;
-    }
-
-    form input[type="file"] {
-        display: none;
-    }
-
-    .invalid-feedback {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        color: #dc3545;
-    }
-</style>
 <div class="ctn_base">
     <div class="ctn_secondary center_div">
         <div style="width: 80%">
-            <h3 style="font-size: 22px; text-align: center;">upload arquivo</h3>
+            <h1 style="text-align: center;">upload arquivo</h1>
 
 
             {% with messages = get_flashed_messages() %}
