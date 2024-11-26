@@ -97,27 +97,23 @@
 
 
             {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info alert-dismissible fade show bg-danger" style="color: white" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-            </div>
-            {% endfor %}
-            {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-info alert-dismissible fade show bg-danger" style="color: white" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <div id="upload_file_box">
-                    <!-- Input de arquivo escondido -->
                     <input type="file" name="file" id="file" required />
 
-                    <!-- Label que atua como botão -->
                     <label for="file" class="upload-label">Escolher arquivo</label>
 
-                    <!-- Elemento para exibir o nome do arquivo -->
                     <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
 
-                    <!-- Botão de upload -->
                     <button type="submit" class="btn-upload">Upload</button>
 
                     <div class="invalid-feedback">Por favor, selecione um arquivo.</div>
