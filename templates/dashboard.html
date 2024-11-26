@@ -10,7 +10,7 @@
 <div class="ctn_base">
     <div class="ctn_secondary text-center center_div">
         <div style="width: 80%">
-            <h3 style="font-size: 1.6rem; color: #c194f7;">DASHBOARD</h3>
+            <h1>DASHBOARD</h1>
             {% with messages = get_flashed_messages() %} {% if messages %} {% for
             message in messages %}
             <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -21,7 +21,7 @@
             {% if uploaded_file %}
                 <p>Arquivo carregado: {{ uploaded_file }}</p>
             {% else %}
-                <p style="font-size: 21.5px;">Nenhum arquivo carregado.</p>
+                <p>Nenhum arquivo carregado.</p>
             {% endif %}
             <div>
                 <a href="{{ url_for('upload') }}">

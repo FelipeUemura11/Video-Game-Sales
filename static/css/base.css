@@ -1,35 +1,35 @@
 :root,
 [data-bs-theme=light] {
-    /*Cor do botão home*/
-    --cor-home--button: #8971a6;
+    /*cor do botão home*/
+    --cor-home-button: #9176b3;
+    --cor-home-button-hover: #5d4c70;
 
-    /*Cores Fundo*/
+    /*cores Fundo*/
     --cor-de-fundo-transpartente: rgba(255, 255, 255, 0.0);
     --cor-de-fundo-nav-button: #8971a6;
     --cor-de-fundo-nav-button-hover: #5d4c70;
     --cor-svg: #FFFFFF;
 
-    /*Cores botao*/
-    --cor-fundo-button: red;
+    /*cores botao*/
+    --cor-fundo-button: #8971a6;
     --cor-fundo-button-hover: #5d4c70;
     --cor-texto-button: #FFFFFF;
 
-    /*Cores inputs*/
-    --cor-fundo-input: #8971a6;
-    --cor-fundo-input-secundario: #5d4c70;
-    --cor-fundo-input-select-hover: #59239e;
-
+    /*cores inputs*/
+    --cor-fundo-input: rgba(220, 215, 224, 0.2);
+    --cor-fundo-input-secundario: #5d4c70 ;
+    --cor-fundo-input-select-hover: #5d4c70 ;
     --cor-texto-input: #FFFFFF;
 
-    /*Cor do texto*/
-    --cor-texto: #FFFFFF;
+    /*cor do texto*/
+    --cor-texto: #dcd7e0;
     --cor-texto-secundario: #0068ff;
     --cor-titulo: #573d80;
 
-    /*Cor tabela*/
+    /*cor tabela*/
     --cor-fundo-cabecalho: #8971a6;
 
-    /*Cor resultado predict*/
+    /*cor resultado predict*/
     --cor-fundo-predict: #8971a6;
 
     --background-color: #f8f9fa;
@@ -38,35 +38,34 @@
 [data-bs-theme=dark] {
     color-scheme: dark;
 
-    /*Cor do botão home*/
-    --cor-home--button: #FFFFFF;
+    /*cor do botão home*/
+    --cor-home--button: #9176b3;
 
-    /*Cores Fundo*/
+    /*cores Fundo*/
     --cor-de-fundo-transpartente: rgba(87, 61, 128, 0.0);
     --cor-de-fundo-nav-button: #8971a6;
     --cor-svg: #FFFFFF;
 
-    /*Cores botao*/
-    --cor-fundo-button: #c194f7;
-    --cor-fundo-button-hover: #8971a6;
+    /*cores botao*/
+    --cor-fundo-button: #8971a6;
+    --cor-fundo-button-hover: #5d4c70;
     --cor-texto-button: #FFFFFF;
 
-    /*Cores inputs*/
-    --cor-fundo-input: #8971a6;
-    --cor-fundo-input-secundario: #5d4c70;
-    --cor-fundo-input-select-hover: #59239e;
-
+    /*cores inputs*/
+    --cor-fundo-input: rgba(220, 215, 224, 0.2);
+    --cor-fundo-input-secundario: #8971a6;
+    --cor-fundo-input-select-hover: #8971a6;
     --cor-texto-input: #FFFFFF;
 
-    /*Cor do texto*/
-    --cor-texto: #FFFFFF;
+    /*cor do texto*/
+    --cor-texto: #dcd7e0;
     --cor-texto-secundario: #4995ff;
     --cor-titulo: #c194f7;
 
-    /*Cor tabela*/
+    /*cor tabela*/
     --cor-fundo-cabecalho: #8971a6;
 
-    /*Cor resultado predict*/
+    /*cor resultado predict*/
     --cor-fundo-predict: #8971a6;
 
     --background-color: #343a40;

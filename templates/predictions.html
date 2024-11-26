@@ -235,19 +235,19 @@
             {% if result %}
                 <div class="result-card">
                     <hr>
-                    <h2 class="mt-4">Resultados:</h2>
+                    <h1 class="mt-4">Resultados:</h1>
                     {% if game %}
                         <div class="game" id="game_info" style="display: flex; flex-direction: column; padding: 20px; border-radius: 20px">
                             <div style="text-align: center; font-size: 1.5em; font-weight: bold;">
                                 {{ game.Name }}
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                                <p><strong>Plataforma:</strong> {{ game.Platform }}</p>
-                                <p><strong>Ano:</strong> {{ game.Year }}</p>
+                                <p>Plataforma: {{ game.Platform }}</p>
+                                <p>Ano: {{ game.Year }}</p>
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                                <p><strong>Gênero:</strong> {{ game.Genre }}</p>
-                                <p><strong>Publicadora:</strong> {{ game.Publisher }}</p>
+                                <p>Gênero: {{ game.Genre }}</p>
+                                <p>Publicadora: {{ game.Publisher }}</p>
                             </div>
 
                         </div>
