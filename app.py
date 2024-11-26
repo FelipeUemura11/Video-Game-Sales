@@ -61,7 +61,7 @@ def upload():
     return render_template('upload.html', home_button=True)
 
 @app.route('/predict', methods=['GET', 'POST'])
-def predcit():
+def predict():
     set_theme()
     df = ler_dados(app.config['UPLOAD_FOLDER'])
 
