@@ -2,148 +2,205 @@
 
 {% block title %}Página Inicial{% endblock %}
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        #pred_box {
+            width: 100%;
+            height: 80%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #pred_box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        #pred_box::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #pred_box::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        #pred_box::-webkit-scrollbar-thumb {
+            background: #8971a6;
+            border-radius: 10px;
+        }
+
+        #pred_box::-webkit-scrollbar-thumb:hover {
+            background: #573D80FF;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .normal-inputs {
+            display: flex;
+            text-decoration: none;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .normal-inputs input {
+            border: none;
+            padding: 5px;
+            background-color: var(--cor-fundo-input);
+            color: var(--cor-texto-input);
+            border-radius: 5px;
+        }
+
+        .normal-inputs input::placeholder {
+            color: var(--cor-texto-input);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+
+            flex: 1;
+        }
+
+        .select2-container .select2-selection--single {
+            background-color: var(--cor-fundo-input);
+            color: var(--cor-texto-input);
+            height: calc(2.2rem + 2px);
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: white;
+            line-height: 2.25rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: var(--cor-texto-input);
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 95%;
+            border-radius: 2px;
+            background-color: var(--cor-fundo-input-secundario);
+            fill: white;
+        }
+
+        .select2-container--default .select2-dropdown {
+            background-color: var(--cor-fundo-input); /* Fundo da lista de opções */
+            color: var(--cor-texto-input); /* Cor do texto */;
+            z-index: 9999;
+        }
+
+        .select2-container--default .select2-results__option {
+            padding: 0.5rem 1rem;
+            color: var(--cor-texto-input);
+            background-color: var(--cor-fundo-input);
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--cor-fundo-input-secundario);
+            color: white;
+        }
+
+        .select2-search__field {
+            background-color: var(--cor-fundo-input);
+            color: var(--cor-texto-input);
+            border-radius: 5px;
+        }
+
+        .result-card {
+            width: 90%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game {
+            background-color: var(--cor-fundo-predict);
+            color: white;
+        }
+
+        #table_box table {
+            border: white 1px solid;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #table_box th, #table_box td {
+            padding: 8px;
+        }
+
+        #table_box th {
+            background-color: var(--cor-fundo-cabecalho);
+            color: white;
+            border-bottom: white 1px solid;
+        }
+
+        #table_box th:not(:last-child) {
+            border-right: white 1px solid;
+        }
+
+        #table_box tr {
+            {#background-color: var(--bs-tertiary-bg-rgb);#}
+        }
+
+        #table_box tr:not(:last-child) td {
+            border-bottom: white 1px solid;
+        }
+
+        #table_box td:not(:last-child) {
+            border-right: white 1px solid;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-<style>
-    #pred_box {
-    width: 100%;
-    height: 300px;
-    max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-    }
-    #pred_box {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    #pred_box::-webkit-scrollbar {
-        width: 12px;
-    }
-    #pred_box::-webkit-scrollbar-track {
-        background: transparent;
-        border-radius: 10px;
-    }
 
-    #pred_box::-webkit-scrollbar-thumb {
-        background: #8971a6;
-        border-radius: 10px;
-    }
-
-    #pred_box::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-    .select2-container .select2-selection--single {
-        background-color: var(--bs-body-bg);
-        color: var(--bs-body-color);
-        border: 1px solid var(--bs-border-color);
-        border-radius: 0.375rem;
-        height: calc(2.25rem + 2px);
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: var(--bs-body-color);
-        line-height: 2.25rem;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__placeholder {
-        color: var(--bs-secondary-color);
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 100%;
-        background-color: var(--bs-tertiary-bg);
-    }
-
-    .select2-container--default .select2-dropdown {
-        background-color: var(--bs-body-bg); /* Fundo da lista de opções */
-        color: var(--bs-body-color); /* Cor do texto */
-        border: 1px solid var(--bs-border-color);
-        border-radius: 0.375rem;
-        z-index: 9999;
-    }
-
-    .select2-container--default .select2-results__option {
-        padding: 0.5rem 1rem;
-        color: var(--bs-body-color);
-        background-color: var(--bs-body-bg);
-    }
-
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: var(--bs-primary-bg-subtle);
-        color: var(--bs-primary-text-emphasis);
-    }
-
-    #table_box table {
-        border: #495057 1px solid;
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin: 20px 0;
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-    #table_box th, #table_box td {
-        padding: 8px;
-    }
-
-    #table_box th {
-        background-color: var(--bs-body-bg);
-        border-bottom: #495057 1px solid;
-    }
-
-    #table_box th:not(:last-child) {
-        border-right: #495057 1px solid;
-    }
-
-
-    #table_box tr {
-        background-color: var(--bs-tertiary-bg-rgb);
-    }
-
-    #table_box td:not(:last-child) {
-        border-right: #495057 1px solid;
-    }
-</style>
 <div class="ctn_base">
-    <div class="ctn_secondary text-center center_div">
-        <div style="width: 100%">
+    <div class="ctn_secondary text-center center_div" style="height: 80%">
+        <div style="width: 100%; height: 100%;">
             <h1>PREDICTIONS</h1>
             <div style="width: 100%; display: flex; justify-content: start">
                 <a href="{{ url_for('dashboard') }}">
-                    <button class="btn btn-primary"
-                        style="color: white; border-radius: 2rem; border:none; background-color: #8971a6;
-                          padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                            DASHBOARD
-                    </button>
+                    <button class="button">DASHBOARD</button>
                 </a>
 
             </div>
             <hr>
             <div id="pred_box" >
-                <div style="display: flex; margin: auto; justify-content: center">
+                <div style="display: flex; margin: auto; justify-content: center; height: 100%; align-items: center">
                     <form action="/predict" method="post" style="width: 90%">
-                        <!-- Nome -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nome</label>
-                            <input type="text" id="name" name="Name" class="form-control" placeholder="Digite o nome" required>
+                        <div class="normal-inputs">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" name="Name" placeholder="Digite o nome" required>
                         </div>
 
-                        <!-- Ano -->
-                        <div class="mb-3">
-                            <label for="year" class="form-label">Ano</label>
-                            <input type="number" id="year" name="Year" class="form-control" placeholder="Digite o ano" required>
+                        <div class="normal-inputs">
+                            <label for="year">Ano</label>
+                            <input type="number" id="year" name="Year" placeholder="Digite o ano" required>
                         </div>
 
-                        <!-- Linha para os três inputs -->
-                        <div class="row" style="width: 100%;">
-                            <!-- Plataforma -->
-                            <div class="col-md-4 mb-3">
-                                <label for="platform" class="form-label">Plataforma</label>
-                                <select id="platform" name="Platform" class="form-select select2" required>
+                        <div class="input-row">
+                            <div class="input-container">
+                                <label for="platform">Plataforma</label>
+                                <select id="platform" name="Platform" class="select2" required>
                                     <option value="" disabled selected>Escolha uma plataforma</option>
                                     {% for platform in platforms %}
                                         <option value="{{ platform }}">{{ platform }}</option>
@@ -151,10 +208,9 @@
                                 </select>
                             </div>
 
-                            <!-- Gênero -->
-                            <div class="col-md-4 mb-3">
-                                <label for="genre" class="form-label">Gênero</label>
-                                <select id="genre" name="Genre" class="form-select select2" required>
+                            <div class="input-container">
+                                <label for="genre">Gênero</label>
+                                <select id="genre" name="Genre" class="select2" required>
                                     <option value="" disabled selected>Escolha um gênero</option>
                                     {% for genre in genres %}
                                         <option value="{{ genre }}">{{ genre }}</option>
@@ -162,10 +218,9 @@
                                 </select>
                             </div>
 
-                            <!-- Publicador -->
-                            <div class="col-md-4 mb-3">
-                                <label for="publisher" class="form-label">Publicador</label>
-                                <select id="publisher" name="Publisher" class="form-select select2" required>
+                            <div class="input-container">
+                                <label for="publisher">Publicador</label>
+                                <select id="publisher" name="Publisher" class="select2" required>
                                     <option value="" disabled selected>Escolha um publicador</option>
                                     {% for publisher in publishers %}
                                         <option value="{{ publisher }}">{{ publisher }}</option>
@@ -174,25 +229,19 @@
                             </div>
                         </div>
 
-                        <!-- Botão de Envio -->
                         <div class="text-center">
-                            <button type="submit"
-                                style="color: white; border-radius: 2rem; border:none; background-color: #8971a6;
-                                padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                                onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                                onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                                    PREVER
-                            </button>
+                            <button type="submit" class="button">PREVER</button>
 
                         </div>
                     </form>
                 </div>
 
             {% if result %}
-                <div style="width: 70%; margin: auto; display: flex; flex-direction: column;">
+                <div class="result-card">
+                    <hr>
                     <h2 class="mt-4">Resultados:</h2>
                     {% if game %}
-                        <div class="border" id="game_info" style="display: flex; flex-direction: column; padding: 20px; border-radius: 20px">
+                        <div class="game" id="game_info" style="display: flex; flex-direction: column; padding: 20px; border-radius: 20px">
                             <div style="text-align: center; font-size: 1.5em; font-weight: bold;">
                                 {{ game.Name }}
                             </div>
@@ -209,7 +258,7 @@
                     {% endif %}
                 </div>
 
-                <div style="width: 70%; margin: auto; display: flex; flex-direction: column;">
+                <div class="result-card">
                     <div id="table_box">
                         <table>
                             <thead>
@@ -252,6 +301,12 @@
         </div>
     </div>
 </div>
+<!-- jQuery (necessário para o Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- JS do Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('.select2').select2({

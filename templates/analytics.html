@@ -1,82 +1,77 @@
 {% extends "base.html" %}
 
 {% block title %}Analytics{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        .ctn_secondary {
+            width: 95%;
+        }
+        #plots_box {
+            width: 100%;
+            height: 450px;
+            max-height: 450px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        #plots_box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
 
+            border: black 1px solid;
+            border-radius: 20px 6px 6px 20px;
+        }
+        #plot {
+            flex: 1 1 calc(50% - 20px);
+            box-sizing: border-box;
+        }
+        #plots_box::-webkit-scrollbar {
+            width: 12px;
+        }
+        #plots_box::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        #plots_box::-webkit-scrollbar-thumb {
+            background: #8971a6;
+            border-radius: 10px;
+        }
+
+        #plots_box::-webkit-scrollbar-thumb:hover {
+            background: #5d4c70;
+        }
+
+        #horizontal_divisor:last-child {
+            height: 0;
+            display: none;
+        }
+
+        .spinner-border {
+            color: var(--cor-titulo);
+        }
+    </style>
+{% endblock %}
 {% block content %}
-<style>
-    .ctn_secondary {
-        width: 95%;
-    }
-    #plots_box {
-        width: 100%;
-        height: 450px;
-        max-height: 450px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-    #plots_box {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
 
-        border: black 1px solid;
-        border-radius: 20px 6px 6px 20px;
-    }
-    #plot {
-        flex: 1 1 calc(50% - 20px);
-        box-sizing: border-box;
-    }
-    #plots_box::-webkit-scrollbar {
-        width: 12px;
-    }
-    #plots_box::-webkit-scrollbar-track {
-        background: transparent;
-        border-radius: 10px;
-    }
-
-    #plots_box::-webkit-scrollbar-thumb {
-        background: #8971a6;
-        border-radius: 10px;
-    }
-
-    #plots_box::-webkit-scrollbar-thumb:hover {
-        background: #5d4c70;
-    }
-
-    #horizontal_divisor:last-child {
-        height: 0px;
-        display: none;
-    }
-</style>
 <div class="ctn_base">
     <div class="ctn_secondary text-center center_div">
         <div style="width: 100%">
-            <h1 style="font-size: 22px;">ANALYTICS</h1>
+            <h1>GRÁFICOS</h1>
             <div style="width: 100%; display: flex; justify-content: space-between">
                 <a href="{{ url_for('dashboard') }}">
-                    <button class="btn btn-primary"
-                        style="color: white; border-radius: 2rem; border: none; background-color: #8971a6;
-                        padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                        DASHBOARD
-                    </button>
+                    <button class="button">DASHBOARD</button>
                 </a>
 
                 <a href="{{ url_for('interactive_plot') }}">
-                    <button class="btn btn-primary"
-                        style="color: white; border-radius: 2rem; border: none; background-color: #8971a6;
-                        padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                    INTERACTIVE GRAPH
-                    </button>
+                    <button class="button">INTERACTIVE GRAPH</button>
                 </a>
             </div>
             <hr>
 
             <div id="loading-spinner" style="display: flex; justify-content: center; align-items: center; height: auto;">
-                <div class="spinner-border text-primary" role="status">
+                <div class="spinner-border" role="status">
                     <span class="visually-hidden">Carregando...</span>
                 </div>
             </div>

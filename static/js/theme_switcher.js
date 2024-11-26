@@ -48,6 +48,7 @@
     setStoredTheme(theme)
     setTheme(theme)
     updateIcon()
+    console.log('Tema alterado para:', theme)
 
     // Ocultar o conteúdo principal e exibir o carregador
     document.getElementById('main-content').style.display = 'none';
