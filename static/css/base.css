@@ -1,33 +1,39 @@
+/*cor roxo 1 #8971a6*/
+/*cor roxo 2  #5d4c70*/
+
 :root,
 [data-bs-theme=light] {
     /*Cor do botão home*/
     --cor-home--button: #212529;
 
-    --cor-de-fundo-transpartente: rgba(255, 255, 255, 0.69);
-    --cor-de-fundo-nav-button: rgb(255, 255, 255);
+    /*Cores Fundo*/
+    --cor-de-fundo-transpartente: rgba(255, 255, 255, 0.0);
+    --cor-de-fundo-nav-button: #8971a6;
+    --cor-de-fundo-nav-button-hover: #5d4c70;
+    --cor-svg: #FFFFFF;
 
     /*Cores botao*/
-    --cor-fundo-button: #8971a6;
-    --cor-fundo-button-hover: #c194f7;
+    --cor-fundo-button: #c194f7;
+    --cor-fundo-button-hover: #8971a6;
     --cor-texto-button: #FFFFFF;
 
     /*Cores inputs*/
-    --cor-fundo-input: #573d80;
-    --cor-fundo-input-secundario: #c194f7;
+    --cor-fundo-input: #8971a6;
+    --cor-fundo-input-secundario: #5d4c70;
     --cor-fundo-input-select-hover: #59239e;
 
     --cor-texto-input: #FFFFFF;
 
     /*Cor do texto*/
-    --cor-texto: #000000;
+    --cor-texto: #FFFFFF;
     --cor-texto-secundario: #0068ff;
     --cor-titulo: #573d80;
 
     /*Cor tabela*/
-    --cor-fundo-cabecalho: #573d80;
+    --cor-fundo-cabecalho: #8971a6;
 
     /*Cor resultado predict*/
-    --cor-fundo-predict: #573d80;
+    --cor-fundo-predict: #8971a6;
 
     --background-color: #f8f9fa;
 }
@@ -38,18 +44,19 @@
     --cor-home--button: #FFFFFF;
 
     /*Cores Fundo*/
-    --cor-de-fundo-transpartente: rgba(87, 61, 128, 0.69);
-    --cor-de-fundo-nav-button: rgb(87, 61, 128);
+    --cor-de-fundo-transpartente: rgba(87, 61, 128, 0.0);
+    --cor-de-fundo-nav-button: #8971a6;
+    --cor-svg: #FFFFFF;
 
     /*Cores botao*/
-    --cor-fundo-button: #8971a6;
-    --cor-fundo-button-hover: #c194f7;
+    --cor-fundo-button: #c194f7;
+    --cor-fundo-button-hover: #8971a6;
     --cor-texto-button: #FFFFFF;
 
     /*Cores inputs*/
     --cor-fundo-input: #8971a6;
-    --cor-fundo-input-secundario: #573d80;
-    --cor-fundo-input-select-hover: #c194f7;
+    --cor-fundo-input-secundario: #5d4c70;
+    --cor-fundo-input-select-hover: #59239e;
 
     --cor-texto-input: #FFFFFF;
 
@@ -59,10 +66,10 @@
     --cor-titulo: #c194f7;
 
     /*Cor tabela*/
-    --cor-fundo-cabecalho: #c194f7;
+    --cor-fundo-cabecalho: #8971a6;
 
     /*Cor resultado predict*/
-    --cor-fundo-predict: #c194f7;
+    --cor-fundo-predict: #8971a6;
 
     --background-color: #343a40;
 }
@@ -82,6 +89,7 @@
 
 #theme-switch:hover {
     transform: scale(1.1);
+    background-color: var(--cor-de-fundo-nav-button-hover);
 }
 
 #theme-switch.clicked:hover {
@@ -93,7 +101,7 @@
 }
 
 #theme-switch svg {
-    fill: var(--cor-texto);
+    fill: var(--cor-svg);
 }
 
 #theme-switch .sun-icon,
@@ -123,6 +131,7 @@
 
 #homeButton:hover {
     transform: scale(1.1);
+    background-color: var(--cor-de-fundo-nav-button-hover);
 }
 
 #homeButton.clicked:hover {
@@ -134,7 +143,7 @@
 }
 
 #homeButton svg {
-    fill: var(--cor-home--button);
+    fill: var(--cor-svg);
 }
 
 

@@ -12,16 +12,12 @@ def mudar_cor_borda(ax, cor):
 
 
 def configurar_cores_e_estilos(theme):
-    if theme == 'dark':
-        sns.set_theme(style='darkgrid')
-        background_color = (43 / 255, 48 / 255, 53 / 255, 0.0)
-        text_color = "#FFFFFF"
-        grid_color = '#FFFFFF'
-    else:
-        sns.set_theme(style='whitegrid')
-        background_color = (1, 1, 1, 0.0)
-        text_color = "#000000"
-        grid_color = '#000000'
+
+    sns.set_theme(style='darkgrid')
+    background_color = (43 / 255, 48 / 255, 53 / 255, 0.0)
+    text_color = "#FFFFFF"
+    grid_color = '#FFFFFF'
+
     return background_color, text_color, grid_color
 
 
@@ -228,7 +224,7 @@ def genero_predominante_regiao(df, ax, text_color, grid_color):
 def gerar_plot_interativo(df, theme):
     sales_over_time = df.groupby('Year')['Global_Sales'].sum().reset_index()
 
-    line_color = 'blue' if theme == 'light' else '#FFFF12'
+    line_color = '#FFFF12'
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -239,8 +235,8 @@ def gerar_plot_interativo(df, theme):
         line=dict(width=2, color=line_color, dash='solid')
     ))
 
-    text_color = '#FFFFFF' if theme == 'dark' else '#000000'
-    grid_color = '#000000' if theme == 'light' else '#FFFFFF'
+    text_color = '#FFFFFF'
+    grid_color = '#FFFFFF'
     zero_line_color = text_color
 
     fig.update_layout(

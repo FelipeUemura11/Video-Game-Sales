@@ -12,7 +12,6 @@
             width: 50px;
             height: 50px;
             background-color: transparent;
-            cursor: pointer;
         }
 
         .hidden-button img {
@@ -21,6 +20,35 @@
             object-fit: cover;
             border-radius: 50%;
             box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
+            display: none; /* Esconde a imagem por padrão */
+        }
+
+        .hidden-button:hover img {
+            display: block; /* Mostra a imagem quando o mouse passa sobre o botão */
+        }
+
+        .easter-egg {
+            display: none;
+            align-items: center; /* Alinha os itens verticalmente */
+            gap: 10px; /* Espaçamento entre o texto e a imagem */
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .easter-egg img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(0,0,0,0.5);
+        }
+
+        .easter-egg p {
+            font-size: 12px;
+            color: #fff;
+            margin: 0; /* Remove margens extras */
+            white-space: nowrap; /* Garante que o texto fique em uma única linha */
         }
     </style>
 {% endblock %}
@@ -38,12 +66,17 @@
     </div>
 </div>
 
-<div class="hidden-button" style="display: none">
+<div class="hidden-button">
     <img src="{{ url_for('static', filename='img/mei mei.jpeg') }}" alt="imagem ao passar o mouse">
+</div>
+
+<div class="easter-egg">
+    <p>ta olhando o que?</p>
+    <img src="{{ url_for('static', filename='gif/mrFresh.gif') }}" alt="mrFresh">
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const hiddenButton = document.querySelector('.hidden-button');
+    const easterEgg = document.querySelector('.easter-egg');
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     let konamiCodePosition = 0;
 
@@ -52,7 +85,7 @@
         if (event.key === konamiCode[konamiCodePosition]) {
             konamiCodePosition++;
             if (konamiCodePosition === konamiCode.length) {
-                hiddenButton.style.display = 'block';
+                easterEgg.style.display = 'flex';
                 konamiCodePosition = 0;
             }
         } else {
