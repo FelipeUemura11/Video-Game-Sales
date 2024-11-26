@@ -4,17 +4,17 @@
 :root,
 [data-bs-theme=light] {
     /*Cor do botão home*/
-    --cor-home--button: #212529;
+    --cor-home--button: #8971a6;
 
     /*Cores Fundo*/
     --cor-de-fundo-transpartente: rgba(255, 255, 255, 0.0);
-    --cor-de-fundo-nav-button: #8971a6;
-    --cor-de-fundo-nav-button-hover: #5d4c70;
+    --cor-de-fundo-nav-button: #8971a6 !important;
+    --cor-de-fundo-nav-button-hover: #5d4c70 !important;
     --cor-svg: #FFFFFF;
 
     /*Cores botao*/
-    --cor-fundo-button: #c194f7;
-    --cor-fundo-button-hover: #8971a6;
+    --cor-fundo-button: red;
+    --cor-fundo-button-hover: #5d4c70;
     --cor-texto-button: #FFFFFF;
 
     /*Cores inputs*/
