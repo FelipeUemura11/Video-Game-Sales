@@ -21,31 +21,16 @@
             {% endif %}
             <div>
                 <a href="{{ url_for('upload') }}">
-                    <button class="btn btn-primary"
-                        style="color: white; border-radius: 2rem; border: none; background-color: #8971a6; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                        onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                        onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                        UPLOAD
-                    </button>
+                    <button class="button">UPLOAD</button>
                 </a>
 
                 {% if uploaded_file %}
                 <a href="{{ url_for('predcit') }}">
-                    <button class="btn btn-primary"
-                            style="color: white; border-radius: 2rem; border: none; background-color: #8971a6; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                            onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                            onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                            PREDICT
-                    </button>
+                    <button class="button">PREDICT</button>
                 </a>
 
                 <a href="{{ url_for('analytics') }}">
-                    <button class="btn btn-primary"
-                            style="color: white; border-radius: 2rem; border: none; background-color: #8971a6; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
-                            onmouseover="this.style.backgroundColor='#5d4c70'; this.style.color='white';"
-                            onmouseout="this.style.backgroundColor='#8971a6'; this.style.color='white';">
-                            ANALYTICS
-                    </button>
+                    <button class="button">ANALYTICS</button>
                 </a>
                 {% endif %}
             </div>
