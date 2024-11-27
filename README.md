@@ -1,9 +1,6 @@
 # ═══════════════ஜ۩۞۩ஜ═══════════════
-<div style="text-align: center;">
 
 # Video Game Sales
-
-</div>
 
 ## Data Set
 - **Nome**: Video Game Sales
@@ -50,7 +47,6 @@ pip install seaborn~=0.13.2
 
 # Estrutura do Projeto
 
---- 
 ## app.py
 - **Páginas da Web**:
 1. Página inicial que limpa o arquivo anterior carregado e define o tema.
@@ -64,8 +60,6 @@ pip install seaborn~=0.13.2
 - **Relacionamento**:
   - Utiliza funções de data.py para carregar dados e realizar predições, e vizualizations.py para gerar visualizações.
 
----
-
 ## data.py
 - **Funções**:
    - ler_dados(upload_folder): Lê o arquivo CSV carregado e o armazena em uma variável global.
@@ -73,8 +67,6 @@ pip install seaborn~=0.13.2
 
 ### Relacionamento com app.py:
 - As funções são chamadas em app.py para carregar dados e fazer predições de jogos na página de previsão (/predict).
-
----
 
 ## vizualizations.py
 - **Funções**:
@@ -86,8 +78,6 @@ pip install seaborn~=0.13.2
 - generate_visualizations é usada para criar gráficos e enviar visualizações ao usuário pela página /get-visualizations.
 - gerar_plot_interativo é utilizada em /interactive_plot.
 
----
-
 ## configuration.py
 - **Configuração**:
   - Cria o objeto Flask para o aplicativo ‘web’.
@@ -96,8 +86,6 @@ pip install seaborn~=0.13.2
 
 ### Relacionamento com _app.py_:
 - _app.py_ importa app de configuration.py para configurar o servidor Flask, incluindo diretórios e chaves.
-
----
 
 ## create_ML_model.py
 - **Funções**:
