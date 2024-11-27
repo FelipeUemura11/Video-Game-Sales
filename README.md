@@ -25,7 +25,7 @@
 2. Abra o PyCharm e adicione o ambiente virtual (venv).
 3. Abra o arquivo "_app.py_".
 4. Clique em "_Create a virtual environment using requirements.txt_" no canto superior direito.
-![Create With requirements.png](ReadME%20Files%2FCreate%20With%20requirements.png)
+![Create venv with.png](ReadME%20Files%2FCreate%20venv%20with.png)
 5. Caso não apareça a opção para criar o ambiente virtual usando o "_requirements.txt_", adicione o ambiente virtual e aguarde até aparecer um aviso para instalar os pacotes necessários.
 6. Clique em "_Install Requirements_" e aguarde até que todos os pacotes sejam instalados.
 ![Install requirements.png](ReadME%20Files%2FInstall%20requirements.png)
