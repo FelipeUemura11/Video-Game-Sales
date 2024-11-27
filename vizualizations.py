@@ -193,6 +193,10 @@ def sales_per_publisher(df, ax, theme, region, text_color, grid_color):
     plt.tight_layout()
 
 
+# Aplica a função lambda para cada coluna.
+# Pega cada coluna(x) e divide cada elemento dessa coluna pela soma total da coluna.
+# Isso resulta em uma normalização, onde todos os valores em uma coluna(cada regiao) somam 1 (ou 100% se multiplicado por 100).
+
 def genero_predominante_regiao(df, ax, text_color, grid_color):
     valores_por_regiao = df.groupby('Genre')[['NA_Sales', 'EU_Sales', 'JP_Sales']].sum().reset_index()
     valores_por_regiao_normalizado = valores_por_regiao.set_index('Genre').apply(lambda x: x / x.sum(), axis=0)
