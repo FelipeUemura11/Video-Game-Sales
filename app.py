@@ -126,5 +126,6 @@ def interactive_plot():
     return render_template('interactive_plot.html', home_button=True, interactive_plot=grafico_interativo)
 
 if __name__ == '__main__':
+    print("Iniciando o servidor...")
     app.run(debug=True)
 
